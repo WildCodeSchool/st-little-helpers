@@ -6,22 +6,33 @@ import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 
 @Slf4j
+@Component
 public class FileMonitor {
 
-    public static void main(String[] args) throws Exception {
-        File folder = new File("src/test/resources");
-        int interval = 5000;
-        log.info("Observing folder '{}' at interval {}ms", folder.getName(), interval);
-        startFileMonitor(folder, interval);
+    private final String watchedFolder;
+    private final int interval;
+
+    public FileMonitor(@Value("${filemonitor.folder}") String watchedFolder, @Value("${filemonitor.interval}")  int interval) {
+        this.watchedFolder = watchedFolder;
+        this.interval = interval;
     }
 
-    public static void startFileMonitor(File folder, int interval) throws Exception {
+    public static void main(String[] args) throws Exception {
+        String folderName = "src/test/resources";
+        int interval = 5000;
+        log.info("Observing folder '{}' at interval {}ms", folderName, interval);
+        new FileMonitor(folderName, interval).startFileMonitor();
+    }
+
+    public void startFileMonitor() throws Exception {
         // Configure Folder
-        FileAlterationObserver observer = new FileAlterationObserver(folder);
+        FileAlterationObserver observer = new FileAlterationObserver(new File(watchedFolder));
         // Configure Interval
         FileAlterationMonitor monitor = new FileAlterationMonitor(interval);
         // Configure Actions
