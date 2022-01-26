@@ -20,10 +20,10 @@ public class CommonsComparableUtilsTests {
     public void testComparables() {
         Predicate<Integer> biggerThanFiveGuava = ComparableUtils.gt(5);
         Predicate<Integer> biggerThanFiveJava = biggerThanFive(5);
-        List<Integer> allNumbers = List.of(2,3,4,5,6);
+        List<Integer> allNumbers = List.of(2,3,4,5,6,7,3,9,2,10);
 
-        allNumbers.stream().filter(biggerThanFiveGuava).collect(Collectors.toList());
-        allNumbers.stream().filter(biggerThanFiveJava).collect(Collectors.toList());
+        System.out.println(allNumbers.stream().filter(biggerThanFiveGuava).collect(Collectors.toList()));
+        System.out.println(allNumbers.stream().filter(biggerThanFiveJava).collect(Collectors.toList()));
     }
 
     private Predicate<Integer> biggerThanFive(int comp) {

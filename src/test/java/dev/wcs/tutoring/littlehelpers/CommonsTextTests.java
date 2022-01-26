@@ -8,8 +8,9 @@ public class CommonsTextTests {
 
     @Test
     public void testCapitalizations() {
-        System.out.println(WordUtils.capitalize("learning java is great"));
-        System.out.println(WordUtils.capitalize("learning java Is great"));
+        System.out.println(WordUtils.capitalize("we are using apache commons text"));
+        System.out.println(WordUtils.capitalize("we are using APACHE COMMONS TEXT"));
+        System.out.println(WordUtils.capitalizeFully("we are using APACHE COMMONS TEXT"));
     }
 
     @Test
@@ -43,21 +44,15 @@ public class CommonsTextTests {
     }
 
     @Test
-    public void testWordWrapping() {
-        System.out.println(WordUtils.capitalize("learning java is great"));
-        System.out.println(WordUtils.capitalize("learning java Is great"));
-    }
-
-    @Test
     public void testContainsAll() {
-        System.out.println(WordUtils.containsAllWords("Word Utils", "Utils", "Word")); //true
-        System.out.println(WordUtils.containsAllWords("Word Utils", "Utils", "Word", "Apache")); //false
+        System.out.println(WordUtils.containsAllWords("This is a long sentence with several words.", "long", "is")); //true
+        System.out.println(WordUtils.containsAllWords("This is a long sentence with several words.", "long", "all")); //true
     }
 
     @Test
     public void testInitials() {
-        System.out.println(WordUtils.initials("Learning Java Is Great")); //LJIG
-        System.out.println(WordUtils.initials("Learning Java is great")); //LJig
+        System.out.println(WordUtils.initials("Using Apache Commons Text is so Cool!")); //UACTisC
+        System.out.println(WordUtils.initials("Using Apache Commons Text is so cool!")); //UACTisc
     }
 
 }
