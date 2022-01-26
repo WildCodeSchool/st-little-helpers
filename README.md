@@ -11,7 +11,7 @@ This repository contains all sources and slides to replay the Tutoring-Session *
 
 ## Run 
 
-* There are some startable Java classes like `FileMonitor`.
-* All other samples are included as Unit tests in `erc/test/java`.
+* The `FileMonitor` can be started with `mvn spring-boot:run` or by starting `LittleHelpersApplication`.
+* All other samples are included as Unit tests in `src/test/java`.
 * The test can be executed with `mvn test` and in any IDE with JUnit support.
-* The `FileMonitor` can best be started from the IDE as a main class.
+* The `FileMonitor` can also be started from the IDE as a main class.
