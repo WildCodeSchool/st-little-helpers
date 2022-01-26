@@ -14,16 +14,18 @@ public class CsvReader {
 
     public void readFileAsCsv(File csvInput) throws IOException {
         Reader in = new FileReader(csvInput);
+
         CSVFormat csvFormat =
             CSVFormat.Builder.create()
                 .setHeader(HEADERS)
                 .setSkipHeaderRecord(true)
                 .build();
+
         Iterable<CSVRecord> records = csvFormat.parse(in);
         for (CSVRecord record : records) {
             City city =
                 City.builder()
-                    .capital(Boolean.valueOf(record.get("capital")))
+                    .capital(Boolean.parseBoolean(record.get("capital")))
                     .founded(LocalDate.parse(record.get("founded"), DateTimeFormatter.ofPattern("yyyyMMdd")))
                     .name(record.get("city"))
                     .population(Integer.parseInt(record.get("population"))).build();
