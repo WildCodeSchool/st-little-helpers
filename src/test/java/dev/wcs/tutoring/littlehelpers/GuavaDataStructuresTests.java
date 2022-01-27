@@ -167,11 +167,12 @@ public class GuavaDataStructuresTests {
 
         nameToId.put("Bob", 42);
         idToName.put(42, "Bob");
+        // what happens if "Bob" or 42 are already present?
+        // weird bugs can arise if we forget to keep these in sync...
 
         BiMap<String, Integer> userId = HashBiMap.create();
         String userForId = userId.inverse().get(42);
-// what happens if "Bob" or 42 are already present?
-// weird bugs can arise if we forget to keep these in sync...
+        System.out.println(userForId);
     }
 
     @Test
@@ -187,28 +188,15 @@ public class GuavaDataStructuresTests {
     }
 
     @Test
-    public void testCollectionsUtilities() {
-        Set<String> animals = ImmutableSet.of("gerbil", "hamster");
-        Set<String> fruits = ImmutableSet.of("apple", "orange", "banana");
+    public void testSetUtilities() {
+        Set<String> cities = ImmutableSet.of("Mainz", "Darmstadt");
+        Set<String> studies = ImmutableSet.of("IT", "Mechanics", "Chemistry");
 
-        Set<List<String>> product = Sets.cartesianProduct(animals, fruits);
-// {{"gerbil", "apple"}, {"gerbil", "orange"}, {"gerbil", "banana"},
-//  {"hamster", "apple"}, {"hamster", "orange"}, {"hamster", "banana"}}
+        Set<List<String>> product = Sets.cartesianProduct(cities, studies);
+        System.out.println(product);
 
-        Set<Set<String>> animalSets = Sets.powerSet(animals);
-// {{}, {"gerbil"}, {"hamster"}, {"gerbil", "hamster"}}
-
-        Map<String, Integer> left = ImmutableMap.of("a", 1, "b", 2, "c", 3);
-        Map<String, Integer> right = ImmutableMap.of("b", 2, "c", 4, "d", 5);
-        MapDifference<String, Integer> diff = Maps.difference(left, right);
-
-        diff.entriesInCommon(); // {"b" => 2}
-        diff.entriesDiffering(); // {"c" => (3, 4)}
-        diff.entriesOnlyOnLeft(); // {"a" => 1}
-        diff.entriesOnlyOnRight(); // {"d" => 5}
-
-
-        ImmutableMap<Integer, String> stringsByIndex = Maps.uniqueIndex(animals, string -> string.length());
+        Set<Set<String>> powerSet = Sets.powerSet(studies);
+        System.out.println(powerSet);
     }
 
 }
