@@ -25,7 +25,7 @@ public class GuavaDataStructuresTests {
 
     @Test
     public void checkPreconditions() {
-        int i = 12;
+        int i = 10;
         int j = 11;
         checkArgument(i >= 0, "Argument was %s but expected nonnegative", i);
         checkArgument(i < j, "Expected i < j, but %s >= %s", i, j);
@@ -101,7 +101,7 @@ public class GuavaDataStructuresTests {
         List<City> cities = Lists.newArrayList(berlin, frankfurt, darmstadt);
         Function<City, Type> classification = getCityClassificationFunction();
         Multimap<Type, City> groups = Multimaps.index(cities, classification);
-        assertEquals(2, groups.size());
+        assertEquals(3, groups.size());
     }
 
     private Function<City, Type> getCityClassificationFunction() {

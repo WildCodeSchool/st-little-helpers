@@ -72,7 +72,7 @@ public class GuavaStringTests {
 
     @Test
     public void testMapJoiner() {
-        Joiner commaJoinerSkippingNulls = Joiner.on(", ").skipNulls();
+        Joiner commaJoinerSkippingNulls = Joiner.on(", ");
         Joiner.MapJoiner mapJoiner = commaJoinerSkippingNulls.withKeyValueSeparator("=");
         Map<String, String> map = new HashMap<>();
         map.put("key1", "value1");
