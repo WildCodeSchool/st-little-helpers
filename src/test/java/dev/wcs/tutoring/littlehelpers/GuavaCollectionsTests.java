@@ -16,7 +16,7 @@ public class GuavaCollectionsTests {
     public void testGuavaCollections() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
         //Using Collection
-        Stream<Integer> streamFromCollection = Streams.stream(numbers);
+        Stream<Integer> streamFromCollection = numbers.stream();
         //Using Iterator
         Stream<Integer> streamFromIterator = Streams.stream(numbers.iterator());
         //Using Iterable
@@ -36,10 +36,7 @@ public class GuavaCollectionsTests {
         //This will return 10
         java.util.Optional<Integer> lastItem = Streams.findLast(integers.stream());
 
-        Streams.zip(Stream.of("candy", "chocolate", "bar"), Stream.of("$1", "$2", "$3"), (arg1, arg2) -> arg1 + ":" + arg2);
-
-        //Stream<Object> concat = Streams.concat(stream1, stream2, stream3);
-        //String.join("",""); // NPE
-
+        Stream zipped = Streams.zip(Stream.of("berlin", "paris", "moscow"), Stream.of("germany", "france", "russia"), (arg1, arg2) -> arg1 + ":" + arg2);
+        zipped.forEach(System.out::println);
     }
 }

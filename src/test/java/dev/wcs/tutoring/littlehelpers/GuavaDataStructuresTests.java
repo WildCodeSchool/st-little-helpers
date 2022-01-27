@@ -29,6 +29,7 @@ public class GuavaDataStructuresTests {
         int j = 11;
         checkArgument(i >= 0, "Argument was %s but expected nonnegative", i);
         checkArgument(i < j, "Expected i < j, but %s >= %s", i, j);
+
         String thisIsAnArg = "This is an argument.";
         String checkArg = checkNotNull(thisIsAnArg, "argument was null.");
         assertEquals(thisIsAnArg, checkArg);
