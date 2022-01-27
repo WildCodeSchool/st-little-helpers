@@ -44,12 +44,14 @@ public class GuavaDataStructuresTests {
 
     @Test
     public void simulateGuavaMultimapWithCollectionMap() {
-        Map<String, List<String>> cities = new LinkedHashMap<>();
-        putElementIntoJavaMap(cities, "large", "Frankfurt");
-        putElementIntoJavaMap(cities, "large", "Berlin");
+        Map<Type, List<String>> cities = new LinkedHashMap<>();
+        putElementIntoJavaMap(cities, Type.LARGE, "Frankfurt");
+        putElementIntoJavaMap(cities, Type.LARGE, "Berlin");
+        putElementIntoJavaMap(cities, Type.MEDIUM, "Darmstadt");
+        System.out.println(cities);
     }
 
-    private void putElementIntoJavaMap(Map<String, List<String>> cities, String type, String city) {
+    private void putElementIntoJavaMap(Map<Type, List<String>> cities, Type type, String city) {
         List<String> values = cities.get(type);
         if(values == null) {
             values = new LinkedList<>();
@@ -64,35 +66,34 @@ public class GuavaDataStructuresTests {
 
     @Test
     public void testGuavaMultimap() {
-        Multimap<String, String> cities = ArrayListMultimap.create();
-        putElementIntoGuavaMap(cities, "large", "Frankfurt");
-        putElementIntoGuavaMap(cities, "large", "Berlin");
-    }
-
-    private void putElementIntoGuavaMap(Multimap<String, String> cities, String type, String city) {
-        cities.put(type, city);
+        Multimap<Type, String> cities = ArrayListMultimap.create();
+        cities.put(Type.LARGE, "Frankfurt");
+        cities.put(Type.LARGE, "Berlin");
+        cities.put(Type.MEDIUM, "Darmstadt");
+        System.out.println(cities);
     }
 
     @Test
     public void testGuavaMultimapWithFactoryFunction() {
-        City berlin = City.builder().name("Berlin").population(4_000_000).build();
-        City frankfurt = City.builder().name("Frankfurt").population(700_000).build();
-        City darmstadt = City.builder().name("Darmstadt").population(80_000).build();
-
         /**
          * Multiset
          */
         List<PokeCity> items =
             Lists.newArrayList(
-                PokeCity.builder().name("berlin").amountItems(1000).build(),
-                PokeCity.builder().name("mainz").amountItems(100).build(),
-                PokeCity.builder().name("darmstadt").amountItems(500).build(),
-                PokeCity.builder().name("mainz").amountItems(200).build());
+                PokeCity.builder().name("berlin").amountItems(5).build(),
+                PokeCity.builder().name("mainz").amountItems(1).build(),
+                PokeCity.builder().name("darmstadt").amountItems(4).build(),
+                PokeCity.builder().name("mainz").amountItems(2).build());
 
-        Multiset<String> multiset = items
-            .stream()
-            .collect(Multisets.toMultiset(PokeCity::getName, PokeCity::getAmountItems, HashMultiset::create));
-        System.out.println(multiset);//[city1 x 30, city2 x 10, city3 x 25]
+        Multiset<String> multiset =
+            items
+                .stream()
+                .collect(Multisets.toMultiset(PokeCity::getName, PokeCity::getAmountItems, HashMultiset::create));
+        System.out.println(multiset);//[berlin x 5, mainz x 3, darmstadt x 4]
+
+        City berlin = City.builder().name("Berlin").population(4_000_000).build();
+        City frankfurt = City.builder().name("Frankfurt").population(700_000).build();
+        City darmstadt = City.builder().name("Darmstadt").population(120_000).build();
 
         /**
          * Index Function
@@ -100,9 +101,7 @@ public class GuavaDataStructuresTests {
         List<City> cities = Lists.newArrayList(berlin, frankfurt, darmstadt);
         Function<City, Type> classification = getCityClassificationFunction();
         Multimap<Type, City> groups = Multimaps.index(cities, classification);
-        assertEquals(1, groups.size());
-        //assertThat(groups.get(3), containsInAnyOrder("Tom"));
-        //assertThat(groups.get(4), containsInAnyOrder("John", "Adam"));
+        assertEquals(2, groups.size());
     }
 
     private Function<City, Type> getCityClassificationFunction() {
@@ -125,7 +124,6 @@ public class GuavaDataStructuresTests {
         return city -> rangeMap.get(city.getPopulation());
     }
 
-
     @Test
     public void testCityClassificationWithRanges() {
         City berlin = City.builder().name("Berlin").population(4_000_000).build();
@@ -142,19 +140,23 @@ public class GuavaDataStructuresTests {
     }
 
     @Test
-    public void givenTable_whenGet_returnsSuccessfully() {
+    public void testTableStructure() {
         Table<String, String, Integer> universityCourseSeatTable = HashBasedTable.create();
-        universityCourseSeatTable.put("Mumbai", "Chemical", 120);
-        universityCourseSeatTable.put("Mumbai", "IT", 60);
-        universityCourseSeatTable.put("Harvard", "Electrical", 60);
-        universityCourseSeatTable.put("Harvard", "IT", 120);
 
-        universityCourseSeatTable.columnMap().get("Mumbai");
+        universityCourseSeatTable.put("Darmstadt", "Chemical", 120);
+        universityCourseSeatTable.put("Darmstadt", "IT", 60);
+        universityCourseSeatTable.put("Mainz", "Electrical", 60);
+        universityCourseSeatTable.put("Mainz", "IT", 120);
 
-        int seatCount = universityCourseSeatTable.get("Mumbai", "IT");
-        Integer seatCountForNoEntry = universityCourseSeatTable.get("Oxford", "IT");
+        universityCourseSeatTable.columnMap().get("Mainz");
 
-        assertEquals(60, seatCount);
+        int seatCountMainz = universityCourseSeatTable.get("Mainz", "IT");
+        Integer seatCountForNoEntry = universityCourseSeatTable.get("Hanau", "IT");
+
+        Map<String, Integer> allForMainz = universityCourseSeatTable.row("Mainz");
+
+        assertEquals(120, seatCountMainz);
+        assertEquals(2, allForMainz.size());
         assertNull(seatCountForNoEntry);
     }
 
