@@ -15,8 +15,12 @@
     <description>little-helpers</description>
     <properties>
         <java.version>11</java.version>
+        <google-guava.version>31.0.1-jre</google-guava.version>
         <commons-csv.version>1.9.0</commons-csv.version>
         <commons-io.version>2.11.0</commons-io.version>
+        <commons-text.version>1.9</commons-text.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <apache-poi.version>5.0.0</apache-poi.version>
     </properties>
     <dependencies>
         <dependency>
@@ -27,13 +31,13 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.0.1-jre</version>
+            <version>${google-guava.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
-            <version>1.9</version>
+            <version>${commons-text.version}</version>
         </dependency>
 
         <dependency>
@@ -50,7 +54,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
 
         <dependency>
@@ -66,7 +70,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.0.0</version>
+            <version>${apache-poi.version}</version>
         </dependency>
     </dependencies>
 
