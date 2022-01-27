@@ -19,6 +19,24 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @Component
 public class GuavaDataStructuresTests {
 
+    /****************
+     * Preconditions
+     */
+
+    @Test
+    public void checkPreconditions() {
+        int i = 12;
+        int j = 11;
+        checkArgument(i >= 0, "Argument was %s but expected nonnegative", i);
+        checkArgument(i < j, "Expected i < j, but %s >= %s", i, j);
+        String thisIsAnArg = "This is an argument.";
+        String checkArg = checkNotNull(thisIsAnArg, "argument was null.");
+        assertEquals(thisIsAnArg, checkArg);
+
+        City berlin = City.builder().name("Berlin").population(4_000_000).build();
+        checkState(berlin.getPopulation() > 0, "%s has no population.", berlin.getName());
+    }
+
     /************
      * Java Map
      */
@@ -61,7 +79,7 @@ public class GuavaDataStructuresTests {
         City darmstadt = City.builder().name("Darmstadt").population(80_000).build();
 
         /**
-         *
+         * Multiset
          */
         List<PokeCity> items =
             Lists.newArrayList(
@@ -76,15 +94,11 @@ public class GuavaDataStructuresTests {
         System.out.println(multiset);//[city1 x 30, city2 x 10, city3 x 25]
 
         /**
-         *
+         * Index Function
          */
-
         List<City> cities = Lists.newArrayList(berlin, frankfurt, darmstadt);
-
         Function<City, Type> classification = getCityClassificationFunction();
-
         Multimap<Type, City> groups = Multimaps.index(cities, classification);
-
         assertEquals(1, groups.size());
         //assertThat(groups.get(3), containsInAnyOrder("Tom"));
         //assertThat(groups.get(4), containsInAnyOrder("John", "Adam"));
@@ -136,10 +150,8 @@ public class GuavaDataStructuresTests {
 
         universityCourseSeatTable.columnMap().get("Mumbai");
 
-        int seatCount
-                = universityCourseSeatTable.get("Mumbai", "IT");
-        Integer seatCountForNoEntry
-                = universityCourseSeatTable.get("Oxford", "IT");
+        int seatCount = universityCourseSeatTable.get("Mumbai", "IT");
+        Integer seatCountForNoEntry = universityCourseSeatTable.get("Oxford", "IT");
 
         assertEquals(60, seatCount);
         assertNull(seatCountForNoEntry);
@@ -169,19 +181,6 @@ public class GuavaDataStructuresTests {
         diff.entriesDiffering(); // {"c" => (3, 4)}
         diff.entriesOnlyOnLeft(); // {"a" => 1}
         diff.entriesOnlyOnRight(); // {"d" => 5}
-    }
-
-    @Test
-    public void checkPreconditions() {
-        int i = 12;
-        int j = 11;
-        checkArgument(i >= 0, "Argument was %s but expected nonnegative", i);
-        checkArgument(i < j, "Expected i < j, but %s >= %s", i, j);
-        String thisIsAnArg = "This is an argument.";
-        String checkArg = checkNotNull(thisIsAnArg, "argument was null.");
-        assertEquals(thisIsAnArg, checkArg);
-        City berlin = City.builder().name("Berlin").population(4_000_000).build();
-        checkState(berlin.getPopulation() > 0, "%s has no population.", berlin.getName());
     }
 
     @Test
