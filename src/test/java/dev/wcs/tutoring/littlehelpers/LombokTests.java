@@ -10,11 +10,13 @@ public class LombokTests {
 
     @Test
     public void useLombokPojos() {
+        NoLombokPojo nopojo = new NoLombokPojo();
+        nopojo.setAttribute("attr");
+        nopojo.getAttribute();
+
         LombokDataPojo pojo = new LombokDataPojo();
         pojo.setAttribute("attr");
         pojo.getAttribute();
-        NoLombokPojo nopojo = new NoLombokPojo();
-
 
         log.info("Hello from Logger!");
     }
