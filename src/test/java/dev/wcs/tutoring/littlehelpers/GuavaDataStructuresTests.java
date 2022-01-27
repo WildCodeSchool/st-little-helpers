@@ -132,11 +132,23 @@ public class GuavaDataStructuresTests {
 
         List<City> cities = Lists.newArrayList(berlin, frankfurt, darmstadt);
 
-        Function<City, Type> classification = getCityClassificationFunction();
+        Function<City, Type> classification = getCityClassificationFunctionWithRanges();
 
         Multimap<Type, City> groups = Multimaps.index(cities, classification);
 
-        assertEquals(1, groups.size());
+        assertEquals(3, groups.size());
+    }
+
+    @Test
+    public void testSetUtilities() {
+        Set<String> cities = ImmutableSet.of("Mainz", "Darmstadt");
+        Set<String> studies = ImmutableSet.of("IT", "Mechanics", "Chemistry");
+
+        Set<List<String>> product = Sets.cartesianProduct(cities, studies);
+        System.out.println(product);
+
+        Set<Set<String>> powerSet = Sets.powerSet(studies);
+        System.out.println(powerSet);
     }
 
     @Test
@@ -185,18 +197,6 @@ public class GuavaDataStructuresTests {
         diff.entriesDiffering(); // {"c" => (3, 4)}
         diff.entriesOnlyOnLeft(); // {"a" => 1}
         diff.entriesOnlyOnRight(); // {"d" => 5}
-    }
-
-    @Test
-    public void testSetUtilities() {
-        Set<String> cities = ImmutableSet.of("Mainz", "Darmstadt");
-        Set<String> studies = ImmutableSet.of("IT", "Mechanics", "Chemistry");
-
-        Set<List<String>> product = Sets.cartesianProduct(cities, studies);
-        System.out.println(product);
-
-        Set<Set<String>> powerSet = Sets.powerSet(studies);
-        System.out.println(powerSet);
     }
 
 }
