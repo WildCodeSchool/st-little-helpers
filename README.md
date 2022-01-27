@@ -15,3 +15,4 @@ This repository contains all sources and slides to replay the Tutoring-Session *
 * All other samples are included as Unit tests in `src/test/java`.
 * The test can be executed with `mvn test` and in any IDE with JUnit support.
 * The `FileMonitor` can also be started from the IDE as a main class.
+* The Excel-Apache-POI-Sample is included in `ExcelTransformer`. Results are in `src/test/resources/*_out.xlsx`
